@@ -308,6 +308,18 @@ namespace ORB_SLAM3 {
                 vPinHoleDistorsion2_[3] = readParameter<float>(fSettings,"Camera2.p2",found);
             }
         }
+        else if (cameraType_ == Rectified) {
+            //Read intrinsic parameters
+            float fx = readParameter<float>(fSettings,"Camera2.fx",found);
+            float fy = readParameter<float>(fSettings,"Camera2.fy",found);
+            float cx = readParameter<float>(fSettings,"Camera2.cx",found);
+            float cy = readParameter<float>(fSettings,"Camera2.cy",found);
+
+            vCalibration = {fx, fy, cx, cy};
+
+            calibration2_ = new Pinhole(vCalibration);
+            originalCalib2_ = new Pinhole(vCalibration);
+        }
         else if(cameraType_ == KannalaBrandt){
             //Read intrinsic parameters
             float fx = readParameter<float>(fSettings,"Camera2.fx",found);
